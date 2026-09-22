@@ -15,6 +15,7 @@ app.use(express.json({ limit: '10mb' }));
 
 // List of core Node.js application files for Plesk Windows deployment
 const PLESK_WINDOWS_DEPLOY_FILES = [
+  '.npmrc',
   'app.js',
   'server.js',
   'package.json',

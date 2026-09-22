@@ -53,7 +53,8 @@
 ---
 
 ### ขั้นตอนที่ 3: ติดตั้ง Dependencies และ Build ระบบ
-1. ในหน้า Node.js ของ Plesk ให้คลิกปุ่ม **NPM Install** เพื่อติดตั้งแพ็กเกจ (หรือเปิด Terminal/PowerShell แล้วพิมพ์ `npm install --omit=dev`)
+1. ในหน้า Node.js ของ Plesk ให้คลิกปุ่ม **NPM Install** เพื่อติดตั้งแพ็กเกจ 
+   *(ระบบมีไฟล์ `.npmrc` พร้อมค่า `legacy-peer-deps=true` ป้องกันปัญหา ERESOLVE ไว้ให้เรียบร้อยแล้ว หรือหากรันผ่าน Command Line สามารถใช้คำสั่ง: `npm install --legacy-peer-deps`)*
 2. ทำการ Build Frontend และ Server โดย:
    - ในหน้า Node.js คลิกที่ส่วน **Run Script** -> พิมพ์คำว่า `build` แล้วกด **Run**
    - หรือรันผ่าน Console: `npm run build`

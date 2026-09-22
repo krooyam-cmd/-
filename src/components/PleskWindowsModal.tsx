@@ -435,6 +435,28 @@ export const PleskWindowsModal: React.FC<PleskWindowsModalProps> = ({ isOpen, on
                   </ul>
                 </div>
 
+                {/* Issue ERESOLVE */}
+                <div className="rounded-xl border border-amber-200 bg-amber-50/70 p-4 space-y-1.5">
+                  <div className="font-bold text-amber-900 flex items-center gap-1.5">
+                    <AlertTriangle className="h-4 w-4 text-amber-600" />
+                    <span>แจ้งเตือน "npm error code ERESOLVE could not resolve dependency"</span>
+                  </div>
+                  <p className="text-slate-700">
+                    <strong>สาเหตุ:</strong> เกิดจาก npm เวอร์ชันใหม่บนเซิร์ฟเวอร์ตรวจสอบความเข้ากันได้ของ peer dependencies (esbuild และ vite) อย่างเข้มงวด
+                  </p>
+                  <p className="text-slate-700 font-medium">
+                    <strong>วิธีแก้ไข:</strong>
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1 text-slate-700">
+                    <li>
+                      <strong>วิธีที่ 1:</strong> รันคำสั่งผ่าน Console/Terminal: <code className="bg-white font-mono font-bold text-blue-700 px-1.5 py-0.5 rounded border border-blue-200">npm install --legacy-peer-deps</code>
+                    </li>
+                    <li>
+                      <strong>วิธีที่ 2:</strong> วางไฟล์ <code className="bg-white font-mono px-1 rounded border">.npmrc</code> (ที่มีคำสั่ง <code className="font-bold">legacy-peer-deps=true</code>) ไว้ในโฟลเดอร์ <code className="bg-white font-mono px-1 rounded border">httpdocs/</code> ซึ่งระบบได้อัปเดต <code className="font-bold">package.json</code> และสร้างไฟล์ <code className="font-bold">.npmrc</code> ไว้ให้เรียบร้อยแล้ว
+                    </li>
+                  </ul>
+                </div>
+
                 {/* Issue 1 */}
                 <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1.5">
                   <div className="font-bold text-amber-900 flex items-center gap-1.5">

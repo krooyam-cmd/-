@@ -139,4 +139,25 @@ if (fs.existsSync(nodeModules)) {
       scanAndPatch(targetDir);
     }
   }
+
+  // 3. Ensure native binary binding is installed for the host OS/arch
+  try {
+    const isWindows = process.platform === 'win32';
+    const isX64 = process.arch === 'x64';
+    if (isWindows && isX64) {
+      const bindingPkg = '@rolldown/binding-win32-x64-msvc';
+      const bindingPath = path.join(nodeModules, '@rolldown', 'binding-win32-x64-msvc');
+      if (!fs.existsSync(bindingPath)) {
+        console.log(`[Node 18 Compatibility] Windows native binding not found. Installing ${bindingPkg}...`);
+        const { spawnSync } = require('child_process');
+        spawnSync('npm', ['install', bindingPkg, '--no-save', '--legacy-peer-deps'], {
+          cwd: projectRoot,
+          stdio: 'inherit',
+          shell: true,
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('[Node 18 Compatibility] Binding check warning:', err.message);
+  }
 }

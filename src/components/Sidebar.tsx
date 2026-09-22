@@ -5,6 +5,7 @@ import {
   Users2,
   Calculator,
   PieChart,
+  Scissors,
   Sparkles,
   FolderGit2,
   CheckCircle2,
@@ -28,6 +29,7 @@ export type ActiveTab =
   | 'students'
   | 'revenue'
   | 'budget'
+  | 'cut_plan'
   | 'learner_activities'
   | 'ai_project_writer'
   | 'projects'
@@ -74,6 +76,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'students', label: '3. ข้อมูลนักเรียน', icon: Users2 },
     { id: 'revenue', label: '4. ประมาณการรายรับ', icon: Calculator },
     { id: 'budget', label: '5. จัดสรรงบประมาณ', icon: PieChart },
+    { id: 'cut_plan', label: '5.1 ตัดแผนงบประมาณ', icon: Scissors, badge: 'ตัดแผน' },
     { id: 'learner_activities', label: '6. กิจกรรมพัฒนาผู้เรียน', icon: Sparkles },
     { id: 'ai_project_writer', label: '7. เขียนโครงการด้วย AI', icon: Bot, badge: 'AI สพฐ.' },
     { id: 'projects', label: '8. แบบเสนอโครงการ', icon: FolderGit2, badge: pendingCount > 0 ? `${pendingCount} รออนุมัติ` : undefined },

@@ -16,7 +16,8 @@ import {
   Wifi,
   Wrench,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Scissors
 } from 'lucide-react';
 
 interface BudgetAllocationViewProps {
@@ -24,6 +25,7 @@ interface BudgetAllocationViewProps {
   activeFiscalYear: FiscalYear;
   totalRevenue: number;
   onUpdateAllocations: (updated: BudgetAllocation[]) => void;
+  onNavigateToCutPlan?: () => void;
 }
 
 export const BudgetAllocationView: React.FC<BudgetAllocationViewProps> = ({
@@ -31,6 +33,7 @@ export const BudgetAllocationView: React.FC<BudgetAllocationViewProps> = ({
   activeFiscalYear,
   totalRevenue,
   onUpdateAllocations,
+  onNavigateToCutPlan,
 }) => {
   const [list, setList] = useState<BudgetAllocation[]>([...allocations]);
   const [baseBudget, setBaseBudget] = useState<number>(() => {
@@ -234,7 +237,20 @@ export const BudgetAllocationView: React.FC<BudgetAllocationViewProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {onNavigateToCutPlan && (
+            <button
+              id="btn-goto-cut-plan"
+              type="button"
+              onClick={onNavigateToCutPlan}
+              className="flex items-center gap-1.5 rounded-lg border border-blue-300 bg-blue-50 hover:bg-blue-100 px-4 py-2 text-xs font-bold text-blue-800 shadow-2xs transition-colors"
+              title="ไปยังหน้าตัดแผนงบประมาณตามกลุ่มงาน"
+            >
+              <Scissors className="h-4 w-4 text-blue-700" />
+              <span>ตัดแผนงบประมาณกลุ่มงาน</span>
+            </button>
+          )}
+
           {savedSuccess && (
             <div className="flex items-center gap-1.5 text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg">
               <Check className="h-4 w-4" />

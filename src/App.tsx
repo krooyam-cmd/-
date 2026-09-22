@@ -30,6 +30,7 @@ import { SchoolInfoView } from './components/SchoolInfoView';
 import { StudentDataView } from './components/StudentDataView';
 import { RevenueView } from './components/RevenueView';
 import { BudgetAllocationView } from './components/BudgetAllocationView';
+import { CutPlanView } from './components/CutPlanView';
 import { LearnerActivitiesView } from './components/LearnerActivitiesView';
 import { AiProjectWriterView } from './components/AiProjectWriterView';
 import { ProjectsView } from './components/ProjectsView';
@@ -396,6 +397,20 @@ export default function App() {
                 activeFiscalYear={activeFiscalYear}
                 totalRevenue={totalRevenue}
                 onUpdateAllocations={(updated) => setAllocations(updated)}
+                onNavigateToCutPlan={() => setActiveTab('cut_plan')}
+              />
+            )}
+
+            {activeTab === 'cut_plan' && (
+              <CutPlanView
+                allocations={allocations}
+                projects={projects}
+                onUpdateProjects={(updated) => setProjects(updated)}
+                currentUser={currentUser}
+                activeFiscalYear={activeFiscalYear}
+                school={school}
+                onOpenExpensesForProject={handleOpenExpensesForProject}
+                onNavigateToProjects={() => setActiveTab('projects')}
               />
             )}
 

@@ -33,6 +33,7 @@ import {
   ArrowUpRight,
   Printer,
   Download,
+  Scissors
 } from 'lucide-react';
 
 ChartJS.register(
@@ -173,6 +174,16 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <button
+              id="btn-dash-cut-plan"
+              type="button"
+              onClick={() => onNavigateTab('cut_plan')}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-500 transition-colors border border-blue-400/30"
+              title="ตัดแผนและปรับงบประมาณโครงการตามกลุ่มงาน"
+            >
+              <Scissors className="h-4 w-4" />
+              <span>ตัดแผนงบประมาณ</span>
+            </button>
             <button
               id="btn-dash-new-project"
               type="button"

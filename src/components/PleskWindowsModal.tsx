@@ -275,8 +275,11 @@ export const PleskWindowsModal: React.FC<PleskWindowsModalProps> = ({ isOpen, on
                     <li><strong>Package Manager:</strong> เลือก npm</li>
                     <li><strong>Document Root:</strong> <code className="font-mono text-blue-700">/httpdocs</code></li>
                     <li><strong>Application Mode:</strong> <code className="font-mono text-blue-700">production</code></li>
-                    <li><strong>Application Startup File:</strong> <code className="font-mono text-amber-700 font-bold">server.js</code></li>
+                    <li><strong>Application Startup File:</strong> พิมพ์ <code className="font-mono text-blue-700 font-bold">app.js</code> หรือ <code className="font-mono text-amber-700 font-bold">server.js</code> (ระบบมีไฟล์รองรับทั้งคู่)</li>
                   </ul>
+                  <div className="rounded-lg bg-blue-50 border border-blue-200 p-2.5 text-[11px] text-blue-900">
+                    💡 <strong>หาก Plesk เตือนสีแดง "app.js The file does not exist":</strong> สามารถเปลี่ยนเป็น <code className="font-bold">server.js</code> หรือดาวน์โหลดไฟล์ <code className="font-bold">app.js</code> จากระบบไปวางไว้ที่โฟลเดอร์หลัก <code className="font-bold">httpdocs/</code> ได้ทันที
+                  </div>
                 </div>
 
                 {/* Step 4 */}
@@ -410,6 +413,28 @@ export const PleskWindowsModal: React.FC<PleskWindowsModalProps> = ({ isOpen, on
               </h3>
 
               <div className="space-y-3 text-xs">
+                {/* Issue 0: Application Startup File error */}
+                <div className="rounded-xl border border-rose-200 bg-rose-50/70 p-4 space-y-1.5">
+                  <div className="font-bold text-rose-900 flex items-center gap-1.5">
+                    <AlertTriangle className="h-4 w-4 text-rose-600" />
+                    <span>แจ้งเตือน "Application Startup File: app.js The file does not exist"</span>
+                  </div>
+                  <p className="text-slate-700">
+                    <strong>สาเหตุ:</strong> Plesk ตั้งค่าเริ่มต้นค้นหาไฟล์ชื่อ <code className="bg-white font-mono px-1 rounded border">app.js</code> แต่ในโฟลเดอร์หลักยังไม่มีไฟล์นี้ หรือยังไม่ได้ตั้งชื่อไฟล์เริ่มต้นให้ตรงกัน
+                  </p>
+                  <p className="text-slate-700 font-medium">
+                    <strong>วิธีแก้ไข (เลือกได้ 2 วิธี):</strong>
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1 text-slate-700">
+                    <li>
+                      <strong>วิธีที่ 1 (แนะนำและง่ายที่สุด):</strong> ในช่อง <strong>Application Startup File</strong> ของ Plesk ให้พิมพ์เปลี่ยนเป็น <code className="bg-white font-mono font-bold text-blue-700 px-1.5 py-0.5 rounded border border-blue-200">server.js</code> แล้วกดปุ่ม <strong>OK</strong> หรือ <strong>Apply</strong>
+                    </li>
+                    <li>
+                      <strong>วิธีที่ 2:</strong> ใช้ไฟล์ <code className="bg-white font-mono font-bold text-emerald-700 px-1.5 py-0.5 rounded border border-emerald-200">app.js</code> ที่ระบบจัดเตรียมไว้ให้ใน root โฟลเดอร์ <code className="bg-white font-mono px-1 rounded border">/httpdocs</code> (ซึ่งจะชี้การทำงานเข้าสู่ระบบ Express อัตโนมัติ)
+                    </li>
+                  </ul>
+                </div>
+
                 {/* Issue 1 */}
                 <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1.5">
                   <div className="font-bold text-amber-900 flex items-center gap-1.5">

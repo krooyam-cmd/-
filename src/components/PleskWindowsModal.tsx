@@ -322,8 +322,13 @@ export const PleskWindowsModal: React.FC<PleskWindowsModalProps> = ({ isOpen, on
                   <p className="text-xs text-slate-600 leading-relaxed">
                     ในหน้า Node.js ของ Plesk ให้คลิกปุ่ม <strong>NPM Install</strong> หรือเลือกคำสั่ง <code className="bg-slate-100 font-mono text-blue-800 px-1 py-0.5 rounded">install</code> จากเมนู เพื่อติดตั้งแพ็กเกจ
                   </p>
-                  <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-2.5 text-[11px] text-emerald-900">
-                    ⭐ <strong>สำหรับเซิร์ฟเวอร์ที่มี Node.js 18.20.6:</strong> ไม่ต้องรันคำสั่ง <code className="font-bold font-mono">build</code> บนเซิร์ฟเวอร์! เนื่องจากโฟลเดอร์ <code className="font-bold font-mono">dist/</code> ในไฟล์ ZIP ได้รับการคอมไพล์สำเร็จแล้ว 100% สามารถกดปุ่ม <strong>Restart</strong> เพื่อเปิดใช้งานได้ทันที
+                  <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-2.5 text-[11px] text-emerald-900 space-y-1">
+                    <p className="font-bold text-emerald-800">
+                      ✓ รองรับการกดคำสั่ง "run build" บน Plesk Control Panel ได้โดยตรง 100%:
+                    </p>
+                    <p>
+                      ระบบได้ใส่สคริปต์แก้ไขและ Polyfill สำหรับ Node.js 18.20.6 อัตโนมัติ ทำให้เมื่อกดเลือกคำสั่ง <code className="font-mono font-bold bg-white px-1 py-0.2 rounded border border-emerald-300">build</code> หรือ <code className="font-mono font-bold bg-white px-1 py-0.2 rounded border border-emerald-300">build:plesk</code> บนหน้า Plesk จะทำงานสำเร็จผ่านฉลุย ไม่ติด Error <code className="font-mono text-red-600">styleText</code> อีกต่อไป
+                    </p>
                   </div>
                 </div>
 

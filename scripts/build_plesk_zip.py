@@ -19,6 +19,7 @@ def build_zip():
         'server.ts',
         'vite.config.ts',
         'tsconfig.json',
+        'polyfill-node18.cjs',
         '.env.example',
         'index.html',
         'metadata.json',
@@ -30,6 +31,7 @@ def build_zip():
         'database',
         'src',
         'dist',
+        'scripts',
     ]
     
     print(f"Building zip package at {output_zip_path}...")

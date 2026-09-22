@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import JSZip from 'jszip';
-import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
 
@@ -75,6 +74,11 @@ app.get('/api/plesk/info', (req, res) => {
 // Endpoint to download the 100% Node.js Plesk Windows deployment package
 app.get('/api/plesk/download-package', async (req, res) => {
   try {
+    const prebuiltZipPath = path.join(process.cwd(), 'dist', 'school-budget-plesk-windows-nodejs.zip');
+    if (fs.existsSync(prebuiltZipPath)) {
+      return res.download(prebuiltZipPath, 'school-budget-plesk-windows-nodejs.zip');
+    }
+
     const zip = new JSZip();
 
     // 1. Add root deployment configuration files
@@ -105,21 +109,35 @@ app.get('/api/plesk/download-package', async (req, res) => {
     const srcZip = zip.folder('src');
     if (srcZip) addDirToZip(srcDir, srcZip);
 
-    // 3. Add built dist folder if it exists
+    // 3. Add built dist folder if it exists (excluding the zip file itself)
     const distDir = path.join(process.cwd(), 'dist');
     if (fs.existsSync(distDir)) {
       const distZip = zip.folder('dist');
-      if (distZip) addDirToZip(distDir, distZip);
+      if (distZip) {
+        const entries = fs.readdirSync(distDir, { withFileTypes: true });
+        for (const entry of entries) {
+          if (entry.name.endsWith('.zip')) continue;
+          const full = path.join(distDir, entry.name);
+          if (entry.isDirectory()) {
+            const subZip = distZip.folder(entry.name);
+            if (subZip) addDirToZip(full, subZip);
+          } else {
+            distZip.file(entry.name, fs.readFileSync(full));
+          }
+        }
+      }
     }
 
     const contentBuffer = await zip.generateAsync({
       type: 'nodebuffer',
       compression: 'DEFLATE',
-      compressionOptions: { level: 9 },
+      compressionOptions: { level: 6 },
+      platform: 'DOS',
     });
 
     res.setHeader('Content-Type', 'application/zip');
     res.setHeader('Content-Disposition', 'attachment; filename="school-budget-plesk-windows-nodejs.zip"');
+    res.setHeader('Content-Length', contentBuffer.length);
     res.send(contentBuffer);
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });
@@ -1017,9 +1035,10 @@ app.all(['/api/super_admin_api.php', '/super_admin_api.php'], (req, res) => {
   }
 });
 
-// Start server with Vite middleware integration
+// Start server with Vite middleware integration (development only)
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -1035,13 +1054,15 @@ async function startServer() {
 
   // Windows Server IIS / iisnode sets process.env.PORT to a named pipe (e.g. \\.\pipe\...)
   // While standard container / Linux / local dev environments set numeric port (default 3000)
-  if (typeof PORT === 'string' && PORT.startsWith('\\\\.\\pipe')) {
-    app.listen(PORT, () => {
-      console.log(`Server running via IISNode on named pipe: ${PORT}`);
+  const port = process.env.PORT;
+  if (port && isNaN(Number(port))) {
+    app.listen(port, () => {
+      console.log(`Server running via IISNode on named pipe: ${port}`);
     });
   } else {
-    app.listen(Number(PORT) || 3000, '0.0.0.0', () => {
-      console.log(`Server running on http://0.0.0.0:${PORT}`);
+    const numericPort = Number(port) || 3000;
+    app.listen(numericPort, '0.0.0.0', () => {
+      console.log(`Server running on http://0.0.0.0:${numericPort}`);
     });
   }
 }

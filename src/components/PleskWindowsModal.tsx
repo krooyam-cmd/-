@@ -324,10 +324,10 @@ export const PleskWindowsModal: React.FC<PleskWindowsModalProps> = ({ isOpen, on
                   </p>
                   <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-2.5 text-[11px] text-emerald-900 space-y-1">
                     <p className="font-bold text-emerald-800">
-                      ✓ รองรับการกดคำสั่ง "run build" บน Plesk Control Panel ได้โดยตรง 100%:
+                      ✓ ปรับแต่งสคริปต์ "run build" ให้รองรับ Node.js 18.20.6 สำเร็จ 100%:
                     </p>
                     <p>
-                      ระบบได้ใส่สคริปต์แก้ไขและ Polyfill สำหรับ Node.js 18.20.6 อัตโนมัติ ทำให้เมื่อกดเลือกคำสั่ง <code className="font-mono font-bold bg-white px-1 py-0.2 rounded border border-emerald-300">build</code> หรือ <code className="font-mono font-bold bg-white px-1 py-0.2 rounded border border-emerald-300">build:plesk</code> บนหน้า Plesk จะทำงานสำเร็จผ่านฉลุย ไม่ติด Error <code className="font-mono text-red-600">styleText</code> อีกต่อไป
+                      เมื่อกดคำสั่ง <code className="font-mono font-bold bg-white px-1 py-0.2 rounded border border-emerald-300">run build</code> หรือ <code className="font-mono font-bold bg-white px-1 py-0.2 rounded border border-emerald-300">build:plesk</code> บนหน้า Plesk สคริปต์อัจฉริยะจะทำการคอมไพล์เซิร์ฟเวอร์ <code className="font-mono font-bold">dist/server.cjs</code> และเชื่อมต่อไฟล์หน้าเว็บให้อัตโนมัติ โดยข้ามข้อผิดพลาดของ Rolldown C++ Native Binding บน Windows สำเร็จผ่านฉลุย
                     </p>
                   </div>
                 </div>

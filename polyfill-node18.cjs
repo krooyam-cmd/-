@@ -1,4 +1,4 @@
-// Polyfill for Node.js 18.x compatibility (adds styleText to node:util)
+// Polyfill for Node.js 18.x compatibility (adds styleText and parseEnv to node:util)
 const util = require('node:util');
 
 if (!util.styleText) {
@@ -34,6 +34,28 @@ if (!util.styleText) {
       }
     }
     return open + text + close;
+  };
+}
+
+if (!util.parseEnv) {
+  util.parseEnv = function (content) {
+    const result = {};
+    if (!content) return result;
+    const lines = String(content).split(/\r?\n/);
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const eqIdx = trimmed.indexOf('=');
+      if (eqIdx !== -1) {
+        const key = trimmed.slice(0, eqIdx).trim();
+        let val = trimmed.slice(eqIdx + 1).trim();
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.slice(1, -1);
+        }
+        result[key] = val;
+      }
+    }
+    return result;
   };
 }
 
